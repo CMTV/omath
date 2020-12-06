@@ -1,0 +1,1 @@
+"use strict";SITE.toggleTheme=function(){var e="light"===localStorage.getItem("theme")?"dark":"light";localStorage.setItem("theme",e),document.body.classList.toggle("theme--dark","dark"==e)};
