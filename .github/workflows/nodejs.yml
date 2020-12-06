@@ -15,7 +15,7 @@ jobs:
         run: |
           npm install
           tsc
-          gulp build-out
+          gulp buildOut
       - name: Deploy site to gh-pages branch
         uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
         with:
