@@ -1,0 +1,129 @@
+.tree
+{
+    --tree-gap: #{$l_gapBig};
+    --c-line: var(--color-text-muted);
+    --c-line-light: var(--color-text-muted);
+
+    &, ol { list-style-type: none; }
+    
+    & > li
+    {
+        margin-top: 0;
+        padding-left: 0 !important;
+
+        &:first-of-type { margin-top: 0; }
+    }
+
+    ol::before
+    {
+        content: "";
+        position: absolute;
+        height: calc(100% - 50px); // Dirty magic number for that font-size
+        border-left: 1px dashed var(--c-line);
+    }
+
+    li
+    {
+        position: relative;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        margin: calc(var(--tree-gap) / 2.5) 0;
+        padding-left: var(--tree-gap);
+
+        &:last-of-type { margin-bottom: 0; }
+    }
+
+    a
+    {
+        position: relative;
+        color: var(--color-text-muted-semi);
+        text-decoration: underline;
+
+        &:hover { cursor: pointer; }
+
+        @include animTextUnderline(var(--color-text-muted));
+
+        &::before
+        {
+            content: "";
+            position: absolute;
+            left: calc(-1 * var(--tree-gap));
+            top: 50%;
+            transform: translateY(-50%);
+            width: calc(var(--tree-gap) / 2);
+            border-bottom: 1px dashed var(--c-line);
+        }
+    }
+}
+
+.tree
+{
+    // Level 1
+    font-size: 16px;
+
+    &  li ol
+    {
+        // Level 2
+        font-size: 15px;
+        &::before { height: calc(100% - 45px); }
+
+        & li ol
+        {
+            // Level 3
+            font-size: 14px;
+            &::before { height: calc(100% - 41px); }
+        }
+    }
+}
+
+// TOC
+.tree.toc
+{
+    a._active
+    {
+        color: var(--color-brand-strong);
+        @include animTextUnderline(var(--color-brand-strong));
+    }
+}
+
+// Book Index
+.tree.index
+{
+    & > li
+    {
+        padding-left: $l_gapBig !important;
+        & > a::before { content: none; }
+    }
+
+    a.indexItem
+    {
+        i
+        {
+            text-align: center;
+            width: 18px;
+            position: relative;
+            left: -7.5px;
+        }
+
+        &--category
+        {
+            i::before { content: '\f07b'; }
+
+            &:not(._expanded) + ol { display: none; }
+
+            &._expanded
+            {
+                i::before { content: '\f07c'; }
+            }
+        }
+
+        &--current
+        {
+            color: var(--color-brand-strong);
+            @include animTextUnderline(var(--color-brand-strong));
+        }
+    }
+}

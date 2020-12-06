@@ -1,0 +1,42 @@
+:root
+{
+    --animation-dur: .25s;
+}
+
+//
+// Colors
+//
+
+:root
+{
+    --color-brand: #009ff4;
+    --color-brand-strong: #007FC3;
+
+    --color-bg: white;
+    --color-bg-accent: #FAFAFA;
+    --color-bg-accent-strong: #F0F0F0; 
+
+    --color-border: #C8C8C8;
+    --color-border-light: #DCDCDC;
+
+    --color-text: #333;
+    --color-text-muted:#919191;
+    --color-text-muted-semi: #626262;
+}
+
+.theme--dark
+{
+    --color-brand: #007FC3;
+    --color-brand-strong: #009ff4;
+
+    --color-bg: #1E1E1E;
+    --color-bg-accent: #252526;
+    --color-bg-accent-strong: #2A2A2B;
+
+    --color-border: #414141;
+    --color-border-light: #373737;
+
+    --color-text: #C3C3C3;
+    --color-text-muted: #626262;
+    --color-text-muted-semi: #979797;
+}

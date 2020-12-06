@@ -1,0 +1,30 @@
+$breakpoints: (
+    tiny:       400px,
+    mini:       550px,
+    noFullNav:  $l_content + (2 * $l_gapBig),
+    stretch:    $l_content + (2 * $l_nav)
+);
+
+@mixin max-bp($breakpoint, $shift: 0)
+{
+    @media (max-width: map-get($breakpoints, $breakpoint) + $shift)
+    {
+        @content;
+    }
+}
+
+@mixin min-bp($breakpoint, $shift: 0)
+{
+    @media (min-width: (map-get($breakpoints, $breakpoint) + $shift))
+    {
+        @content;
+    }
+}
+
+@mixin between-bp($bpMin, $bpMax, $minShift: 0, $maxShift: 0)
+{
+    @media (min-width: map-get($breakpoints, $bpMin) + $minShift) and (max-width: map-get($breakpoints, $bpMax) + $maxShift)
+    {
+        @content;
+    }
+}

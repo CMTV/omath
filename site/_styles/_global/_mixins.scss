@@ -1,0 +1,30 @@
+@mixin flexCC
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin transition($properties...)
+{
+    $props: ();
+    $duration: var(--animation-dur);
+
+    @each $p in $properties
+    {
+        $props: append($props, $p $duration, comma);
+    }
+    
+    transition: $props;
+}
+
+@mixin animTextUnderline($color: inherit)
+{
+    text-decoration-color: transparent;
+    @include transition(text-decoration-color, color);
+
+    &:hover
+    {
+        text-decoration-color: $color;
+    }
+}

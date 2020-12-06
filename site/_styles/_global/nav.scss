@@ -1,0 +1,405 @@
+.nav-open-button
+{
+    --nav-open-button-size: #{$l_navOpenButton};
+
+    @include flexCC;
+
+    left: calc(-1 * var(--nav-open-button-size));
+
+    @include max-bp('noFullNav')
+    {
+        &:not(._hidden) { left: $l_gapBig; }
+    }
+
+    position: fixed;
+    bottom: $l_gapBig;
+    z-index: 5;
+
+    opacity: .9;
+
+    width: var(--nav-open-button-size);
+    height: var(--nav-open-button-size);
+
+    color: var(--color-bg-accent);
+    font-size: 20px;
+
+    background: var(--color-text-muted);
+    box-shadow: 0 0 5px 7px var(--color-bg);
+
+    @include transition(background-color, left, opacity);
+
+    &:hover
+    {
+        cursor: pointer;
+        background: var(--color-text-muted-semi);
+        opacity: 1;
+    }
+}
+
+nav.full
+{
+    position: fixed;
+    left: calc(50% - #{$l_content} / 2 - #{$l_nav});
+    z-index: 10;
+
+    opacity: .75;
+
+    @include transition(left, opacity);
+
+    &:hover { opacity: 1; }
+
+    @include max-bp('stretch') { left: 0; }
+    @include max-bp('noFullNav') { left: calc(-1 * #{$l_nav}); }
+
+    &:hover .nav-item.logo { color: var(--color-brand); }
+
+    .nav-item
+    {
+        @include flexCC;
+        padding: $l_gap $l_gapBig;
+
+        color: var(--color-text-muted);
+        font-size: 25px;
+        text-decoration: none;
+
+        @include transition(color);
+
+        &:hover
+        {
+            cursor: pointer;
+            color: var(--color-text);
+        }
+
+        &:first-of-type { padding-top: $l_gapBig; }
+        &:last-of-type  { padding-bottom: $l_gapBig; }
+
+        i
+        {
+            width: 30px;
+            text-align: center;
+        }
+
+        &.logo
+        {
+            svg
+            {
+                width: 24px;
+
+                path
+                {
+                    fill: var(--color-text-muted);
+                    @include transition(fill);
+                }
+            }
+
+            &:hover svg path { fill: var(--color-brand-strong); }
+        }
+    }
+}
+
+nav.menu
+{
+    position: fixed;
+    left: calc(50% - #{$l_content} / 2 - #{$l_nav});
+    z-index: 15;
+    
+    opacity: 0;
+
+    width: $l_navOpened;
+    height: 100vh;
+
+    overflow-x: hidden;
+
+    border: 1px solid var(--color-border);
+    border-top: none;
+    border-bottom: none;
+
+    background-color: var(--color-bg-accent);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, .1);
+
+    @include transition(left, opacity);
+
+    &::-webkit-scrollbar
+    {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb
+    {
+        background: var(--color-border-light);
+    }
+
+    &._opened
+    {
+        opacity: 1;
+        & + main { opacity: .5; }
+    }
+
+    &:not(._opened)
+    {
+        pointer-events: none;
+        touch-action: none;
+    }
+
+    @include max-bp('stretch')
+    {
+        left: 0;
+    }
+
+    @include max-bp('noFullNav')
+    {
+        &:not(._opened)
+        {
+            left: calc(-1 * #{$l_navOpened});
+        }
+
+        border-left: none;
+        left: 0;
+    }
+
+    .nav-pane
+    {
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        width: 100%;
+        font-size: 20px;
+        @include transition(left);
+
+        &:not(._current) { pointer-events: none; }
+
+        &:not(._current), &._right { left: $l_navOpened; }
+        &._left { left: calc(-1 * #{$l_navOpened}); }
+        &._noAnim { transition: none; }
+
+        &__header
+        {
+            position: relative;
+
+            .back-button, .close-button
+            {
+                position: absolute;
+                top: 0;
+                z-index: 1;
+                padding: $l_gap;
+                color: var(--color-text-muted);
+                @include transition(color);
+
+                &:hover
+                {
+                    cursor: pointer;
+                    color: var(--color-text);
+                }
+            }
+
+            .back-button { left: 0; }
+            .close-button { right: 0; }
+
+            .title
+            {
+                text-align: center;
+                padding: $l_gap 0;
+
+                i { margin-right: $l_gap; }
+            }
+
+            color: var(--color-text-muted-semi);
+
+            background: var(--color-bg-accent-strong);
+            border-bottom: 1px solid var(--color-border);
+        }
+    }
+}
+
+// Root nav pane
+.nav-pane[data-root]
+{
+    .nav-pane__header
+    {
+        padding: $l_gap 0;
+
+        .close-button
+        {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .title
+        {
+            padding: 0;
+            display: flex;
+
+            padding-left: $l_gap;
+            text-decoration: none;
+
+            svg
+            {
+                margin-right: $l_gap;
+                width: 32px;
+
+                path
+                {
+                    fill: var(--color-brand);
+                    @include transition(fill);
+                }
+            }
+
+            &:hover 
+            {
+                cursor: pointer;
+
+                svg path
+                {
+                    fill: var(--color-brand-strong);
+                }
+            }
+
+            .site-info
+            {
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+
+                .site-title
+                {
+                    color: var(--color-text);
+                    font-weight: 500;
+                }
+
+                .site-desc
+                {
+                    color: var(--color-text-muted);
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+
+    .nav-pane__content
+    {
+        .nav-item
+        {
+            display: flex;
+            align-items: center;
+            padding: 0 $l_gap;
+
+            color: var(--color-text-muted-semi);
+            text-decoration: none;
+
+            border-bottom: 1px solid var(--color-border-light);
+            height: 60px;
+
+            @include transition(color, background-color);
+
+            &:hover
+            {
+                cursor: pointer;
+                color: var(--color-text);
+                background: var(--color-bg-accent-strong);
+            }
+
+            i
+            {
+                font-size: 20px;
+                width: 30px;
+                text-align: center;
+                margin-right: $l_gap;
+            }
+
+            span
+            {
+                font-size: 18px;
+                flex: 1;
+            }
+        }
+    }
+}
+
+.nav-pane[name="toc"]
+{
+    .nav-pane__content
+    {
+        padding: $l_gap $l_gapBig;
+        padding-right: $l_gap;
+    }
+}
+
+.nav-pane[name="index"]
+{
+    .nav-pane__content
+    {
+        padding: $l_gap;
+        padding-left: 0;
+    }
+}
+
+.nav-pane[name="settings"]
+{
+    .nav-pane__content
+    {
+        @mixin clickableOption
+        {
+            cursor: pointer;
+            &:hover
+            {
+                background-color: var(--color-bg-accent-strong);
+                .option__label { color: var(--color-text); }
+            }
+            
+            @include transition(background-color);
+            .option__label { @include transition(color); }
+        }
+
+        .option
+        {
+            border-bottom: 1px solid var(--color-border-light);
+            padding: $l_gap;
+
+            &__label
+            {
+                color: var(--color-text-muted-semi);
+                font-size: 18px;
+            }
+
+            // // //
+
+            &--theme
+            {
+                @include clickableOption;
+
+                display: flex;
+                align-items: center;
+
+                .option__label
+                {
+                    flex: 1px;
+                }
+
+                .option__content
+                {
+                    --size: 23px;
+
+                    font-size: var(--size);
+                    width: var(--size);
+                    height: 32px;
+                    position: relative;
+                    overflow: hidden;
+                    
+                    i
+                    {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        opacity: 0;
+                        @include transition(left, opacity);
+
+                        &.light { left: calc(-1 * var(--size)); }
+                        &.dark  { left: var(--size); }
+
+                        body:not(.theme--dark) &.light { left: 0; opacity: 1; }
+                        body.theme--dark &.dark { left: 0; opacity: 1; }
+                    }
+                }
+            }
+        }
+    }
+}

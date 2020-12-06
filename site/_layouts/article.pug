@@ -1,0 +1,40 @@
+extends templates/default
+
+include includes/mixins
+
+block fallbackVars
+    - __NAV_SITE_DESC = book.title
+
+block styles
+    link(rel="stylesheet", href="/site/styles/article.css")
+
+block fullNav
+    .nav-item(title="Оглавление", data-nav-switcher="index")
+        i.fas.fa-sitemap
+    .nav-item(title="Содержание", data-nav-switcher="toc")
+        i.fas.fa-list
+
+block navItems
+    +menu-nav-item('index', 'Оглавление', 'fas fa-sitemap', 'nav|index')
+
+    if (toc.length !== 0)
+        +menu-nav-item('toc', 'Содержание', 'fas fa-list', 'nav|toc')
+
+block navPanes
+    +nav-pane('index', 1, 'Оглавление', 'fas fa-sitemap')
+        ol.tree.index
+            +treeBookIndex(book.nav)
+
+    +nav-pane('toc', 1, 'Содержание', 'fas fa-list')
+        ol.tree.toc
+            +treeToc(toc)
+
+block main
+    != content
+
+block footerScripts
+    script(src="/site/scripts/components.js")
+
+    if (toc.length !== 0)
+        script(src="/site/scripts/toc.js")
+    script(src="/site/scripts/book-index.js")

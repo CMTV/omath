@@ -1,0 +1,136 @@
+mixin nav-pane(name, depth, title, icon, backPanel = 'root')
+    .nav-pane(data-depth=depth, name=name)
+        .nav-pane__header
+            .back-button(title="Назад", onclick=`SITE.Navigation.switchPane('${backPanel}')`)
+                i.fas.fa-chevron-left
+            .close-button(title="Закрыть")
+                i.fas.fa-times
+            .title
+                i(class=icon)
+                span=title
+        .nav-pane__content
+            block
+
+mixin menu-nav-item(className, title, icon, dest)
+    -
+        let destArr = dest.split('|');
+        
+        type = destArr[0];
+        dest = destArr[1];
+
+    a.nav-item(
+        class=className,
+        href=(type === 'link' || type === 'linkOut' ? dest : null),
+        target=(type === 'linkOut' ? '_blank' : null),
+        onclick=(type === 'nav' ? `SITE.Navigation.switchPane('${dest}')` : null)
+    )
+        i(class=icon)
+        span=title
+
+block fallbackVars
+    - __NAV_SITE_DESC = 'Подробно и понятно!';
+
+doctype html
+html(lang="ru")
+
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1.0")
+    
+        //- SEO
+
+        if (typeof SEO.title === 'string')
+            title= `${SEO.title} – ${_.title}`
+        if (Array.isArray(SEO.title))
+            if (SEO.title.length === 1)
+                title= SEO.title[0]
+            else
+                title= `${SEO.title[0]} – ${SEO.title[1]} | ${_.title}`
+
+        if (SEO.desc)
+            meta(name="description", content=SEO.desc)
+
+        if (SEO.tags)
+            meta(name="keywords" content= SEO.tags.join(', '))
+
+        //- Favicon
+        link(rel="icon", type="image/svg+xml", href="/site/graphics/favicons/favicon.svg")
+
+        //- Global stylesheet
+        link(rel="stylesheet", href="/site/styles/global.css")
+
+        //- Font Awesome
+        link(rel="stylesheet", href="/site/vendor/fontawesome/css/all.min.css")
+
+        //- KaTeX
+        link(rel="stylesheet", href="/site/vendor/katex/katex.min.css")        
+
+        block styles
+        block headScripts
+    
+    body
+        //- Initial theme switch
+        script.
+            (function()
+            {
+                var theme = localStorage.getItem('theme');
+                var preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+                if ( (theme === null && preferDark) || (theme === 'dark') )
+                    document.body.classList.add('theme--dark');
+            })();
+
+        .nav-open-button(title="Отрыть меню", data-nav-switcher)
+            i.fas.fa-bars
+
+        nav.full
+            .nav-item.logo(data-nav-switcher="root")
+                include ../../graphics/logo.svg
+   
+            block fullNav
+
+        nav.menu
+            .nav-pane._current(data-depth=0, data-root, name="root")
+                .nav-pane__header
+                    .close-button(title="Закрыть")
+                        i.fas.fa-times
+                    a.title(href="/")
+                        include ../../graphics/logo.svg
+                        .site-info
+                            span.site-title Математика
+                            span.site-desc= __NAV_SITE_DESC
+                                
+                .nav-pane__content
+                
+                    block navItems
+
+                    +menu-nav-item('settings', 'Настройки', 'fas fa-cog', 'nav|settings')
+                    .nav-item
+                        i.fas.fa-share-alt
+                        span Поделиться
+                    .nav-item
+                        i.fas.fa-info
+                        span О сайте
+
+            +nav-pane('settings', 1, 'Настройки', 'fas fa-cog')
+                .option.option--theme(title="Переключить цветовую схему", onclick="SITE.toggleTheme()")
+                    .option__label Цветовая схема
+                    .option__content
+                        i.fas.fa-sun.light
+                        i.fas.fa-moon.dark
+
+            block navPanes
+
+        main
+            block main
+
+        //- SITE global variable
+        script(src="/site/scripts/SITE.js")
+
+        //- Theme switcher
+        script(src="/site/scripts/theme-switcher.js")
+
+        //- Navigation
+        script(src="/site/scripts/nav.js")
+
+        block footerScripts

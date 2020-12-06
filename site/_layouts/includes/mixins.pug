@@ -1,0 +1,28 @@
+mixin treeToc(nestedArray)
+    each tocItem in nestedArray
+        li
+            a(href= '#' + tocItem.id)= tocItem.title
+
+            if (tocItem.children.length !== 0)
+                ol
+                    +treeToc(tocItem.children)
+
+mixin treeBookIndex(indexNode)
+    each indexItem in indexNode
+        li
+            a.indexItem(
+                class='indexItem--' + indexItem.type.toLowerCase(),
+                class=(`${book.id}/${indexItem.id}` === id ? 'indexItem--current' : null)
+                href=(indexItem.type === 'ARTICLE' ? `/${book.id}/${indexItem.id}` : null)
+            )
+                case indexItem.type
+                    when 'CATEGORY'
+                        i.fas
+                    when 'ARTICLE'
+                        i.fas.fa-file-alt
+
+                span= indexItem.title
+            
+            if (indexItem.type === 'CATEGORY')
+                ol
+                    +treeBookIndex(indexItem.subNav)

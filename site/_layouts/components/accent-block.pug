@@ -1,0 +1,24 @@
+mixin side-block(name, content, title = null)
+    .side-block(
+        class=`side-block--${name}`,
+        title=title
+    )!= content
+
+mixin content-block(name, header, content)
+    .content-block(class=`content-block--${name}`)
+        if (header)
+            .content-block__header!= header
+        .content-block__body!= content
+
+.accent-block(class=`accent-block--${type}`, id=id)
+    .accent-block__side
+        +side-block(mainSideBlock.name, mainSideBlock.content, mainSideBlock.title)
+
+        each sideBlock in sideBlocks
+            +side-block(sideBlock.name, sideBlock.content, sideBlock.title)
+        
+    .accent-block__content
+        +content-block(mainContentBlock.name, mainContentBlock.header, mainContentBlock.content)
+        
+        each contentBlock in contentBlocks
+            +content-block(contentBlock.name, contentBlock.header, contentBlock.content)

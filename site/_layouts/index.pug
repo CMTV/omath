@@ -1,0 +1,12 @@
+extends templates/default
+
+block styles
+    link(rel="stylesheet", href="/site/styles/article.css")
+    link(rel="stylesheet", href="/site/styles/index.css")
+
+block fullNav
+    .nav-item(title="Настройки", data-nav-switcher="settings")
+        i.fas.fa-cog
+
+block main
+    h1 Индекс

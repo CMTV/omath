@@ -1,0 +1,190 @@
+@import '../_global/_vars';
+@import '../_global/_mixins';
+@import '../_global/_breakpoints';
+
+nav.menu
+{
+    .bookTitle
+    {
+        padding: $l_gapSmall;
+        border-bottom: 1px solid var(--color-border-light);
+
+        text-align: center;
+    }
+}
+
+main
+{
+    font-size: 18px;
+    line-height: 1.7;
+    text-align: justify;
+
+    @include max-bp('mini')
+    {
+        font-size: 97%;
+    }
+
+    > *, p:not(:last-of-type)
+    {
+        margin-bottom: $l_gapBig;
+    }
+
+    a
+    {
+        color: var(--color-brand-strong);
+        @include animTextUnderline;
+    }
+
+    //
+    // Accent blocks
+    //
+
+    @import '../includes/accent-block';    
+
+    .accent-block--theorem
+    {
+        .side-block--proof
+        {
+            overflow: visible;
+            @include transition(background-color);
+
+            i { @include transition(transform); }
+        }
+
+        &:not(._proof-opened)
+        {
+            .content-block:not(:first-of-type) { display: none; }
+        }
+
+        &._proof-opened
+        {
+            .side-block--proof i { transform: rotateZ(180deg); }
+
+            .content-block
+            {
+                &:first-of-type
+                {
+                    padding-bottom: $l_gap / 2;
+                }
+
+                &:not(:first-of-type)
+                {
+                    padding-top: $l_gap / 2;
+                }
+            }
+        }
+    }
+
+    //
+    // Lists
+    //
+
+    ul, ol
+    {
+        text-align: left;
+        list-style-position: inside;
+
+        li::marker
+        {
+            color: var(--color-text-muted-semi);
+            font-weight: 500;
+        }
+    }
+
+    ul
+    {
+        list-style-type: square;
+    }
+
+    //
+    // Headers
+    //
+
+    .header-anchor
+    {
+        opacity: 0;
+        margin-left: $l_gapSmall;
+        font-size: 70%;
+
+        color: var(--color-text-muted);
+        &:hover { color: var(--color-text-muted-semi) }
+
+        @include transition(color, opacity);
+    }
+
+    h1, h2, h3, h4, h5, h6
+    {
+        line-height: 1;
+        font-weight: 500;
+        margin-top: $l_gapBig * 2;
+        scroll-margin-top: $l_gapBig;
+        margin-bottom: $l_gapBig;
+
+        &:hover .header-anchor { opacity: 1; }
+    }
+    
+    h1
+    {
+        font-size: 35px;
+        margin-top: $l_gapBig;
+
+        position: relative;
+        top: -5px;
+    }
+
+    h2
+    {
+        font-size: 27px;
+        padding-bottom: $l_gap + 5px;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    h3, h4, h5, h6
+    {
+        margin-top: $l_gapBig * 1.5;
+        margin-bottom: $l_gap;
+    }
+
+    h4, h5, h6
+    {
+        margin-top: $l_gapBig * 1.25;
+    }
+
+    //
+    // KaTeX
+    //
+    
+    .katex-display
+    {
+        margin: 0;
+        .base { margin: $l_gap/2.2 0; }
+
+        overflow: hidden;
+        overflow-x: auto;
+
+        &::-webkit-scrollbar
+        {
+            height: 5px;
+        }
+
+        &::-webkit-scrollbar-track
+        {
+            background: var(--color-bg);
+        }
+
+        &::-webkit-scrollbar-thumb
+        {
+            background: var(--color-border-light);
+
+            &:hover
+            {
+                background: var(--color-brand);
+            }
+        }
+    }
+
+    .katex > .katex-html
+    {
+        white-space: normal;
+    }
+}

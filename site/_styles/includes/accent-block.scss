@@ -1,0 +1,130 @@
+.accent-block
+{
+    --side-size: #{$l_gapBig};
+    --_c-primary: black;
+    --_c-text: black;
+
+    scroll-margin-top: $l_gapBig;
+    display: flex;
+
+    &__side
+    {
+        width: calc(var(--side-size) - 2px);
+
+        .side-block
+        {
+            @include flexCC;
+            width: var(--side-size);
+            height: var(--side-size);
+
+            font-weight: 500;
+
+            &:first-of-type
+            {
+                background: var(--_c-primary);
+                color: white;
+                cursor: help;
+            }
+
+            &:not(:first-of-type)
+            {
+                border: 2px solid var(--_c-primary);
+                color: var(--_c-primary);
+                cursor: pointer;
+                @include transition(background-color);
+            }
+        }
+    }
+
+    &__content
+    {
+        flex: 1;
+
+        .content-block
+        {
+            padding-left: $l_gap;
+            border-left: 2px solid var(--_c-primary);
+
+            &:first-of-type
+            {
+                .content-block__header
+                {
+                    font-weight: bold;
+
+                    a
+                    {
+                        color: var(--_c-text);
+                        @include animTextUnderline;
+                    }
+                }
+            }
+
+            &:not(:first-of-type)
+            {
+                border-left-style: dotted;
+            }
+
+            &__header
+            {
+                height: var(--side-size);
+                color: var(--_c-text);
+                font-weight: 500;
+            }
+        }
+    }
+
+    @include max-bp('mini')
+    {
+        flex-direction: column;
+
+        &__side
+        {
+            display: flex;
+            width: 100%;
+        }
+
+        &__content
+        {
+            .content-block
+            {
+                &:first-of-type
+                {
+                    padding-top: $l_gapSmall;
+                }
+
+                &__header
+                {
+                    height: auto;
+                }
+            }
+        }
+    }
+}
+
+//
+//
+//
+
+@mixin accentBlockColors($type, $color)
+{
+    .accent-block--#{$type}
+    {
+        --_c-primary: #{$color};
+        --_c-text: #{$color}; //#{darken($color, 10%)};
+    }
+}
+
+@include accentBlockColors('definition', #609955);
+@include accentBlockColors('theorem', #997055);
+@include accentBlockColors('example', #828282);
+
+//
+// Custom rules
+//
+
+.accent-block--definition .definition
+{
+    color: var(--_c-primary);
+    font-weight: bold;
+    @include animTextUnderline;
+}

@@ -1,0 +1,28 @@
+extends templates/default
+
+block styles
+    link(rel="stylesheet", href="/site/styles/article.css")
+    link(rel="stylesheet", href="/site/styles/main.css")
+
+block fullNav
+    .nav-item(title="Настройки", data-nav-switcher="settings")
+        i.fas.fa-cog
+
+block navItems
+    +menu-nav-item('site-index', 'Индекс', 'fas fa-shapes', 'link|/index')
+
+block main
+    h1 Учебник по математике
+
+    p Привет мир!
+
+    h2 Книги
+
+    each book in books
+        .book
+            a.book__header(href='/' + book.articleIds[0])
+                .title= book.title
+                .goto
+                    i.fas.fa-arrow-right
+
+            .book__desc= book.desc
