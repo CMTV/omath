@@ -1,1 +1,1 @@
-"use strict";window.addEventListener("load",function(){for(var e=document.querySelectorAll(".accent-block--theorem .side-block--proof"),t=0;t<e.length;t++)e[t].addEventListener("click",function(){this.parentElement.parentElement.classList.toggle("_proof-opened")})});
+"use strict";window.addEventListener("load",function(){for(var e=document.querySelectorAll(".accent-block--expandable .side-block:nth-of-type(2)"),t=0;t<e.length;t++)e[t].addEventListener("click",function(){this.parentElement.parentElement.classList.toggle("_expanded")})});
