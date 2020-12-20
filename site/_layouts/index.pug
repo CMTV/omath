@@ -1,7 +1,6 @@
 extends templates/default
 
 block styles
-    link(rel="stylesheet", href="/site/styles/article.css")
     link(rel="stylesheet", href="/site/styles/index.css")
 
 block fullNav
@@ -10,3 +9,40 @@ block fullNav
 
 block main
     h1 Индекс
+
+    each indexItem in index
+        -
+            let preType = '';
+            let single = true;
+
+            if (indexItem.occurrences.length !== 1)
+            {
+                preType = '<i class="fas fa-random"></i>';
+                single = false;
+            }
+            else
+                preType = indexItem.occurrences[0].type.title[0];
+
+        .indexItem(class='indexItem--' + (single ? 'single' : 'multiple'))
+            .indexItem__type(
+                class=(single ? `type--${indexItem.occurrences[0].type.name}` : null),
+                title=(single ? indexItem.occurrences[0].type.title : 'Встречается в нескольких местах')
+            )!= preType
+
+            .indexItem__info
+                a.term(href=(single ? '/' + indexItem.occurrences[0].path : null))= indexItem.term
+                .locations
+                    each location, locI in indexItem.occurrences
+                        a.location(href=(single ? null : '/' + location.path))
+                            .location__type(
+                                class=`type--${location.type.name}`,
+                                title=location.type.title
+                            )= location.type.title[0]
+
+                            .location__article
+                                i.fas.fa-file-alt(title="Статья")
+                                span= location.article
+
+                            .location__book
+                                i.fas.fa-book(title="Учебник")
+                                span= location.book

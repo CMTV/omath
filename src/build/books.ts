@@ -14,10 +14,6 @@ export function buildBooks()
     let bookIds = fs.readdirSync(path.join('data', 'books'), { withFileTypes: true })
                     .filter(dirent => dirent.isDirectory())
                     .map(dirent => dirent.name);
-    
-    //
-    bookIds = ['test-book']; // TODO: DEV PURPOSES ONLY!
-    //
 
     bookIds.forEach(bookId =>
     {

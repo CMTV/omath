@@ -69,6 +69,7 @@
                 height: var(--side-size);
                 color: var(--_c-text);
                 font-weight: 500;
+                text-align: left;
             }
         }
     }
@@ -101,6 +102,12 @@
     }
 }
 
+.accent-link
+{
+    color: var(--_c);
+    @include animTextUnderline;
+}
+
 //
 //
 //
@@ -110,7 +117,13 @@
     .accent-block--#{$type}
     {
         --_c-primary: #{$color};
-        --_c-text: #{$color}; //#{darken($color, 10%)};
+        --_c-text: #{$color};
+        --_c-hover: #{mix($color, transparent, 15%)};
+    }
+
+    .accent-link--#{$type}
+    {
+        --_c: #{$color};
     }
 }
 
@@ -127,4 +140,37 @@
     color: var(--_c-primary);
     font-weight: bold;
     @include animTextUnderline;
+}
+
+//
+// Expandable Accent Block
+//
+
+.accent-block--expandable
+{
+    .side-block:nth-of-type(2)
+    {
+        overflow: hidden;
+        @include transition(background-color);
+
+        &:hover { background-color: var(--_c-hover); }
+
+        i { @include transition(transform); }
+    }
+
+    &:not(._expanded) { .content-block:not(:first-of-type) { display: none; } }
+
+    &._expanded
+    {
+        .side-block:nth-of-type(2)
+        {
+            i { transform: rotateZ(180deg); }
+        }
+
+        .content-block
+        {
+            &:first-of-type { padding-bottom: $l_gap / 2; }
+            &:not(:first-of-type) { padding-top: $l_gap / 2; }
+        }
+    }
 }

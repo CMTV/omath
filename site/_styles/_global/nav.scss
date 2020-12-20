@@ -11,6 +11,15 @@
         &:not(._hidden) { left: $l_gapBig; }
     }
 
+    @include max-bp('mini')
+    {
+        &:not(._hidden)
+        {
+            left: $l_gap;
+            bottom: $l_gap;
+        }
+    }
+
     position: fixed;
     bottom: $l_gapBig;
     z-index: 5;
@@ -258,6 +267,9 @@ nav.menu
                 display: flex;
                 flex-direction: column;
                 text-align: left;
+
+                position: relative;
+                top: -2px;
 
                 .site-title
                 {

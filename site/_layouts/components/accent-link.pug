@@ -1,0 +1,4 @@
+a.accent-link(
+    class=`accent-link--${type}`,
+    href=id.split('/').map((item, i, arr) => { return (i === arr.length - 1) ? `#${type}_${item}` : item }).join('/')
+)!= text

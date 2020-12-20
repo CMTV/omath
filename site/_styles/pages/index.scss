@@ -1,0 +1,125 @@
+@import '../_global/_vars';
+@import '../_global/_mixins';
+@import '../_global/_breakpoints';
+
+@mixin indexItemColor($name, $color)
+{
+    .indexItem
+    {
+        .type--#{$name}
+        {
+            color: $color !important;
+            cursor: help;
+        }
+    }
+}
+
+@include indexItemColor('definition', #609955);
+@include indexItemColor('theorem', #997055);
+
+.indexItem
+{
+    --gap: #{$l_gap};
+
+    display: flex;
+    background: var(--color-bg-accent);
+    border: 1px solid var(--color-border-light);
+
+    &--single
+    {
+        .location__type { display: none; }
+    }
+
+    &__type
+    {
+        padding: var(--gap);
+        font-weight: bold;
+        cursor: help;
+    }
+
+    &__info
+    {
+        flex: 1;
+        padding:  var(--gap);
+        padding-left: 0;
+
+
+        a.term
+        {
+            font-weight: 500;
+            color: var(--color-text);
+
+            &[href]
+            {
+                @include animTextUnderline;
+            }
+        }
+
+        .locations
+        {
+            margin-top: 5px;
+
+            .location
+            {
+                display: flex;
+                flex-wrap: wrap;
+
+                font-size: 0.87em;
+                color: var(--color-text-muted);
+                text-decoration: none;
+
+                @include transition(color);
+
+                &[href]:hover
+                {
+                    cursor: pointer;
+                    color: var(--color-text-muted-semi);
+                }
+
+                &:not(:last-of-type) { margin-bottom: 5px; }
+
+                &__type { font-weight: bold; }
+
+                div
+                {
+                    &:not(:last-of-type) { margin-right: $l_gapSmall; }
+
+                    i
+                    {
+                        margin-right: $l_gapSmall;
+                    }
+                }
+            }
+        }
+    }
+
+    @include max-bp('mini')
+    {
+        position: relative;
+
+        &__type
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            text-align: center;
+
+            padding-right: 0;
+            padding-bottom: 0;
+        }
+
+        &__info
+        {
+            .term
+            {
+                margin-left: calc(30px + var(--gap));
+            }
+
+            .locations
+            {
+                margin-left: var(--gap);
+            }
+        }
+    }
+}

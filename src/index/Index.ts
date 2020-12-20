@@ -1,6 +1,6 @@
 interface IndexItemData
 {
-    type: IndexItemType;
+    type: { name: string; title: string; };
     path: string;
     article?: string;
     book?: string;
@@ -12,10 +12,21 @@ export enum IndexItemType
     Theorem = 'theorem'
 }
 
+const IndexItemTypeTitle: { [key: string]: string } =
+{
+    definition: 'Определение',
+    theorem: 'Теорема'
+}
+
 export class Index
 {
-    currentContext: { article: string; book: string; articlePath: string; }
-    index: {[term: string]: IndexItemData[]} = {}
+    currentContext: { article: string; book: string; articlePath: string; };
+    index: {[term: string]: IndexItemData[]} = {};
+
+    setContext(context: { article: string; book: string; articlePath: string; })
+    {
+        this.currentContext = Object.assign(context);
+    }
 
     getSorted()
     {
@@ -29,15 +40,16 @@ export class Index
         return outIndex;
     }
 
-    add(type: IndexItemType, term: string, id: string)
+    add(type: string, term: string, id: string)
     {
-        term = term.toLowerCase();
+        // Capitalizing first letter
+        term = term[0].toUpperCase() + term.slice(1);
 
         if (!(term in this.index))
             this.index[term] = [];
 
         this.index[term].push({
-            type: type,
+            type: { name: type, title: IndexItemTypeTitle[type] },
             article: this.currentContext.article,
             book: this.currentContext.book,
             path: this.currentContext.articlePath + '#' + id
@@ -50,4 +62,4 @@ export class Index
     }
 }
 
-export let INDEX = new Index();
+export const INDEX = new Index();

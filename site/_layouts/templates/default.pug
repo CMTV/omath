@@ -53,6 +53,8 @@ html(lang="ru")
         if (SEO.tags)
             meta(name="keywords" content= SEO.tags.join(', '))
 
+        meta(name="og:image" content=_.url + 'site/graphics/og/default.png')
+
         //- Favicon
         link(rel="icon", type="image/svg+xml", href="/site/graphics/favicons/favicon.svg")
 

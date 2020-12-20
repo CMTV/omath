@@ -1,18 +1,18 @@
 //
-// Theorem 
+// Expandable Accent Blocks 
 //
 
 window.addEventListener('load', () =>
 {
-    let openProofButtons = document.querySelectorAll('.accent-block--theorem .side-block--proof');
+    let openButtons = document.querySelectorAll('.accent-block--expandable .side-block:nth-of-type(2)');
 
-    for (let i = 0; i < openProofButtons.length; i++)
+    for (let i = 0; i < openButtons.length; i++)
     {
-        let button = openProofButtons[i];
+        let button = openButtons[i];
 
         button.addEventListener('click', function ()
         {
-            this.parentElement.parentElement.classList.toggle('_proof-opened');
+            this.parentElement.parentElement.classList.toggle('_expanded');
         });
     }
 });

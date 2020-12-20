@@ -20,6 +20,8 @@ block navItems
     if (toc.length !== 0)
         +menu-nav-item('toc', 'Содержание', 'fas fa-list', 'nav|toc')
 
+    +menu-nav-item('site-index', 'Индекс', 'fas fa-shapes', 'link|/index')
+
 block navPanes
     +nav-pane('index', 1, 'Оглавление', 'fas fa-sitemap')
         ol.tree.index

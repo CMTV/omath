@@ -10,7 +10,11 @@ mixin content-block(name, header, content)
             .content-block__header!= header
         .content-block__body!= content
 
-.accent-block(class=`accent-block--${type}`, id=id)
+.accent-block(
+    class=`accent-block--${type}`,
+    class=(isExpandable ? 'accent-block--expandable' : ''),
+    id=id
+)
     .accent-block__side
         +side-block(mainSideBlock.name, mainSideBlock.content, mainSideBlock.title)
 

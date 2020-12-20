@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as fse from 'fs-extra';
 import * as path from 'path';
 
 import { BookInfo, BOOKS_DIR } from "./Book";
@@ -49,11 +50,11 @@ export class Article
         this.meta = Translator.getMeta(articleFile);
 
         // Setting index context
-        INDEX.currentContext = {
+        INDEX.setContext({
             article: this.meta.title,
             book: this.bookInfo.title,
             articlePath: this.id
-        }
+        });
         //
 
         this.content = Translator.getContent(articleFile);
@@ -67,6 +68,15 @@ export class Article
     {
         return path.join(
             BOOKS_DIR,
+            path.normalize(this.id),
+            relPath
+        );
+    }
+
+    getFullOutPath(relPath: string = '/'): string
+    {
+        return path.join(
+            'out',
             path.normalize(this.id),
             relPath
         );
@@ -95,6 +105,17 @@ export class Article
         return result;
     }
 
+    moveFiles()
+    {
+        fs.readdirSync(this.getFullPath())
+        .filter(fileName => {
+            return !Object.values(RESERVED_FILENAMES).includes(fileName);
+        })
+        .forEach(fileName => {
+            fse.copySync(this.getFullPath(fileName), this.getFullOutPath(fileName));
+        });
+    }
+
     build()
     {
         let view: ArticleView;
@@ -120,5 +141,7 @@ export class Article
             path.join(path.normalize(this.id), 'index.html'),
             view
         );
+
+        this.moveFiles();
     }
 }
