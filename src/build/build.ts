@@ -3,7 +3,7 @@ import * as path from 'path';
 
 import { buildIndex } from ".";
 import { BuildFlag, CONFIG } from "../Config";
-import { INDEX } from "../Index";
+import { INDEX } from "../index/Index";
 import { PugWrapper } from "../site/PugWrapper";
 import { buildBooks } from "./books";
 import { buildMainPage } from "./main";
