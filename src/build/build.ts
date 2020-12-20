@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { buildIndex } from ".";
+import { buildIndex } from "./index";
 import { BuildFlag, CONFIG } from "../Config";
 import { INDEX } from "../index/Index";
 import { PugWrapper } from "../site/PugWrapper";

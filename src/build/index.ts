@@ -1,4 +1,4 @@
-import { INDEX } from "../Index";
+import { INDEX } from "../index/Index";
 import { PageView } from "../site/PageView";
 import { PugWrapper } from "../site/PugWrapper";
 
