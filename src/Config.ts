@@ -3,7 +3,7 @@
  */
 const config =
 {
-    url: 'https://example.com/',
+    url: 'https://omath.ru/',
     devUrl: 'http://localhost:8080/',
     title: 'Математика'
 }
