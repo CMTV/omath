@@ -1,4 +1,4 @@
-import { Index } from ".";
+import { Index } from "./Index";
 import { ABV, XMLAccentBlock } from "../accent-block/AccentBlock";
 
 enum IndexItemType

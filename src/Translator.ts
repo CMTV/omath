@@ -1,10 +1,9 @@
 import { AccentBlock } from "./accent-block/AccentBlock";
 import { Example } from "./accent-block/Example";
-import { INDEX, IndexItemType } from "./Index";
+import { INDEX, IndexItemType } from "./index/Index";
 import { Definition } from "./index/Definition";
 import { Theorem } from "./index/Theorem";
 import { PugWrapper } from "./site/PugWrapper";
-import { Util } from "./util/Util";
 
 const mdIt = require('markdown-it')({
     html: true,

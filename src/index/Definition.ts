@@ -1,6 +1,6 @@
 import { Translator } from "../Translator";
 import { IndexSubject } from "./IndexSubject";
-import { Index, IndexItemType } from ".";
+import { Index, IndexItemType } from "./Index";
 import { ABV, SideBlock } from "../accent-block/AccentBlock";
 import { Util } from "../util/Util";
 

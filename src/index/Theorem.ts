@@ -1,4 +1,4 @@
-import { Index, IndexItemType } from ".";
+import { Index, IndexItemType } from "./Index";
 import { ABV, SideBlock } from "../accent-block/AccentBlock";
 import { Translator } from "../Translator";
 import { Util } from "../util/Util";

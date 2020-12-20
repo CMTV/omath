@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 
 import { BookInfo, BOOKS_DIR } from "./Book";
-import { INDEX } from './Index';
+import { INDEX } from './index/Index';
 import { PageSEO, PageView } from './site/PageView';
 import { PugWrapper } from './site/PugWrapper';
 import { Heading, Translator } from './Translator';
