@@ -7,7 +7,7 @@ import { ABV, SideBlock, XMLAccentBlock } from "./AccentBlock";
  *      Это обычный пример, которому даже не нужно отдельное решение.
  * </example>
  * 
- * <example>
+ * <example dodem="22">
  *      <task>Это условие примера или задачи.</task>
  *      <solution>Это подробное решение примера</solution>
  * </example>
@@ -23,6 +23,18 @@ export class Example extends XMLAccentBlock
     task: string;
     solution: string;
 
+    dodem: number[];
+
+    parseDodemAttr(): number[]
+    {
+        let tasks: number[] = [];
+
+        if (this.parsedXml?.$?.dodem)
+            tasks = this.parsedXml.$.dodem.split(',').map((item: string) => +item);
+
+        return tasks;
+    }
+
     toAccentBlock(): ABV
     {
         let abv = this.getCasualABV();
@@ -36,6 +48,15 @@ export class Example extends XMLAccentBlock
         };
 
         abv.mainContentBlock.header = this.getLinkedHeader(this.title || 'Пример');
+
+        if (this.dodem.length !== 0)
+        {
+            abv.mainContentBlock.header += this.dodem.map((item: number) =>
+            {
+                return `<a href="https://dodem.ru/tasks/${item}" target="_blank" class="dodem-ref">${item}</a>`;
+            }).join('');
+        }
+
         abv.mainContentBlock.content = this.task;
 
         if (this.solution != null)
@@ -72,6 +93,7 @@ export class Example extends XMLAccentBlock
 
         this.id = this.parsedXml?.$?.id || null;
         this.title = this.parseTitle();
+        this.dodem = this.parseDodemAttr();
 
         if (!hasSolution)
         {

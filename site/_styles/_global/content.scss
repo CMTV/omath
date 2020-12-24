@@ -130,7 +130,7 @@ main
 
         .theme--dark &
         {
-            filter: invert(100%);
+            filter: hue-rotate(180deg) invert(100%);
         }
 
         @for $i from 1 through 9

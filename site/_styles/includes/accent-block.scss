@@ -130,6 +130,7 @@
 @include accentBlockColors('definition', #609955);
 @include accentBlockColors('theorem', #997055);
 @include accentBlockColors('example', #828282);
+@include accentBlockColors('dodem', #558199);
 
 //
 // Custom rules
@@ -172,5 +173,42 @@
             &:first-of-type { padding-bottom: $l_gap / 2; }
             &:not(:first-of-type) { padding-top: $l_gap / 2; }
         }
+    }
+}
+
+//
+// Example
+//
+
+.accent-block--example
+{
+    a.dodem-ref
+    {
+        margin-left: $l_gapSmall;
+        padding: 4px 7px;
+
+        font-weight: normal;
+        font-size: 80%;
+        text-decoration: none;
+
+        border: 1px solid var(--color-border-light);
+        background-color: var(--color-bg-accent-strong);
+
+        &::before
+        {
+            content: "Д.";
+            margin-right: 2px;
+        }
+
+        @include transition(border-color, color);
+
+        &:hover
+        {
+            cursor: pointer;
+            border-color: var(--color-border);
+            color: var(--color-text) !important;
+        }
+
+        &:first-of-type { margin-left: $l_gap; }
     }
 }

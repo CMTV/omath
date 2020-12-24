@@ -4,6 +4,7 @@ import { INDEX, IndexItemType } from "./index/Index";
 import { Definition } from "./index/Definition";
 import { Theorem } from "./index/Theorem";
 import { PugWrapper } from "./site/PugWrapper";
+import { Dodem } from "./accent-block/Dodem";
 
 const mdIt = require('markdown-it')({
     html: true,
@@ -137,6 +138,11 @@ export class Translator
         return new RegExp(`(<${tag}(?:.+?=".+?")*?>)([\\s\\S]+?)(<\\/${tag}>)`, 'gm');
     }
 
+    static tagSingleRegexp(tag: string)
+    {
+        return new RegExp(`(<${tag}(?:.+?=".+?")*?) (\\/>)`, 'gm');
+    }
+
     //
     // Accent Blocks
     //
@@ -150,6 +156,12 @@ export class Translator
         content = content.replace(this.tagRegexp('example'), match =>
         {
             return AccentBlock.compile((new Example).parse(match).toAccentBlock());
+        });
+
+        // Dodems
+        content = content.replace(this.tagSingleRegexp('dodem'), match =>
+        {
+            return AccentBlock.compile((new Dodem).parse(match).toAccentBlock());
         });
 
         return content;
