@@ -5,6 +5,7 @@ import { Definition } from "./index/Definition";
 import { Theorem } from "./index/Theorem";
 import { PugWrapper } from "./site/PugWrapper";
 import { Dodem } from "./accent-block/Dodem";
+import { Important } from "./accent-block/Important";
 
 const mdIt = require('markdown-it')({
     html: true,
@@ -164,6 +165,12 @@ export class Translator
             return AccentBlock.compile((new Dodem).parse(match).toAccentBlock());
         });
 
+        // Importants
+        content = content.replace(this.tagRegexp('important'), match =>
+        {
+            return AccentBlock.compile((new Important).parse(match).toAccentBlock());
+        });
+
         return content;
     }
 
@@ -268,7 +275,7 @@ class AccentLink extends Component<{ type: string, text: string, id: string }>
         e: 'example'
     }
 
-    static regexp = /<(\S+)?:\[(.+)?\]\((.+)?\)>/gm;
+    static regexp = /<(\S+?):\[(.+?)\]\((.+?)\)>/gm;
 
     render(content: string): string
     {

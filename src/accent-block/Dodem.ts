@@ -1,4 +1,3 @@
-import { Translator } from "../Translator";
 import { Util } from "../util/Util";
 import { ABV, SideBlock, XMLAccentBlock } from "./AccentBlock";
 
@@ -15,7 +14,7 @@ export class Dodem extends XMLAccentBlock
 
     parse(raw: string): this
     {
-        raw = Util.wrapTagCDATA(this.type , raw);
+        raw = Util.wrapTagCDATA(this.type, raw);
 
         this.parsedXml = Util.parseXML(raw);
 
