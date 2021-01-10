@@ -6,6 +6,7 @@ import { Theorem } from "./index/Theorem";
 import { PugWrapper } from "./site/PugWrapper";
 import { Dodem } from "./accent-block/Dodem";
 import { Important } from "./accent-block/Important";
+import { Util } from "./util/Util";
 
 const mdIt = require('markdown-it')({
     html: true,
@@ -207,7 +208,12 @@ export class Translator
     static renderAccentLinks(content: string): string
     {
         content = (new AccentLink).render(content);
+        return content;
+    }
 
+    static renderGalleries(content: string): string
+    {
+        content = (new Gallery).render(content);
         return content;
     }
 
@@ -234,6 +240,7 @@ export class Translator
         content = content.replace(/^ +/gm, '');
 
         content = this.renderAccentLinks(content);
+        content = this.renderGalleries(content);
 
         content = this.renderMath(content);
         content = this.renderMarkdown(content);
@@ -264,6 +271,14 @@ abstract class Component<TView>
     }
 }
 
+/**
+ * Ссылки на определения, теоремы и другие акцент блоки, имеющие ID
+ * 
+ * <d:[текст](ссылка на определение)>
+ * <t:[текст](ссылка на теорему)>
+ * 
+ * ...
+ */
 class AccentLink extends Component<{ type: string, text: string, id: string }>
 {
     name = 'accent-link';
@@ -282,6 +297,50 @@ class AccentLink extends Component<{ type: string, text: string, id: string }>
         content = content.replace(AccentLink.regexp, (match, type, text, id) =>
         {
             return this.renderComponent({ type: AccentLink.shortcutMap[type], text: text.trim(), id: id.trim() });
+        });
+
+        return content;
+    }
+}
+
+interface GalleryFigure
+{
+    caption?: string;
+    flex?: number;
+    iAttrs?: any;
+}
+
+class Gallery extends Component<{ isBreak: boolean, figures: GalleryFigure[] }>
+{
+    name = 'gallery';
+
+    render(content: string): string
+    {
+        content = content.replace(Translator.tagRegexp('gallery'), (match) =>
+        {
+            let figures: GalleryFigure[] = [];
+            let parsedXML = Util.parseXML(match);
+
+            parsedXML.figure.forEach((rawFigure: any) =>
+            {
+                let figure: GalleryFigure = {
+                    caption: rawFigure.$?.caption,
+                    flex: rawFigure.$?.flex,
+                    iAttrs: Object.keys(rawFigure.$).filter((key) => key.startsWith('i-')).reduce((obj: any, key) => { obj[key.replace('i-', '')] = rawFigure.$[key]; return obj; }, {})
+                };
+
+                figure.iAttrs['alt'] = rawFigure.$['i-alt'] || figure.caption;
+
+                if (figure.caption) figure.caption = Translator.renderMath(figure.caption);
+                if (figure.flex)    figure.flex = +figure.flex;
+
+                figures.push(figure);
+            });
+
+            return this.renderComponent({
+                isBreak: parsedXML?.$?.break,
+                figures: figures
+            });
         });
 
         return content;

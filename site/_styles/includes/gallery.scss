@@ -1,0 +1,32 @@
+.gallery
+{
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: $l_gapBig;
+
+    @include max-bp('mini')
+    {
+        gap: $l_gap;
+        &.breakable { flex-direction: column; }
+    }
+
+    figure
+    {
+        img
+        {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%; height: auto;
+        }
+
+        img + figcaption { margin-top: $l_gap; }
+
+        figcaption
+        {
+            font-size: 90%;
+            color: var(--color-text-muted);
+            text-align: center;
+        }
+    }
+}

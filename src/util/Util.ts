@@ -31,4 +31,9 @@ export class Util
 
         return obj;
     }
+
+    static logFull(obj: any)
+    {
+        console.log(require('util').inspect(obj, { showHidden: false, depth: null }));
+    }
 }

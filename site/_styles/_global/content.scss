@@ -124,8 +124,8 @@ main
         display: block;
         margin: auto;
 
-        max-width: 100%;
         width: 100%;
+        max-width: 100%;
         height: auto;
 
         .theme--dark &
@@ -133,17 +133,29 @@ main
             filter: hue-rotate(180deg) invert(100%);
         }
 
-        @for $i from 1 through 9
+        @include min-bp('mini', 1)
         {
-            &.w#{$i}
-            { 
-                width: 10% * $i;
-
-                @include max-bp(mini)
-                {
-                    width: 100%;
-                }
+            @for $i from 1 through 9
+            {
+                &.w#{$i}  {  width: 10% * $i; }
             }
+        }
+
+        @include max-bp('mini')
+        {
+            @for $i from 1 through 9
+            {
+                &.mini-w#{$i} { width: 10% * $i; }
+            }
+        }
+    }
+
+    @include max-bp('mini')
+    {
+        & > p > img,
+        .gallery.breakable img
+        {
+            min-width: calc(#{$inf} - 2 * #{$l_gap});
         }
     }
 }

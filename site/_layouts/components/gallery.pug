@@ -1,0 +1,7 @@
+.gallery(class=(isBreak ? 'breakable' : null))
+    each figure in figures
+        figure(style=(figure.flex ? `flex: ${figure.flex};` : null))
+            img&attributes(figure.iAttrs)
+
+            if (figure.caption)
+                figcaption!= figure.caption

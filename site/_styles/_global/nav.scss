@@ -13,10 +13,11 @@
 
     @include max-bp('mini')
     {
+        bottom: $l_gap;
+
         &:not(._hidden)
         {
             left: $l_gap;
-            bottom: $l_gap;
         }
     }
 

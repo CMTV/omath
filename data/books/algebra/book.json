@@ -5,9 +5,9 @@
     "nav":
     {
         "Модуль": "abs",
-        "Category 1":
+        "Свойства функций":
         {
-            "Article 1 1": "cat1/article11"
+            "Монотонность": "f-properties/monotonic"
         }
     }
 }
