@@ -23,14 +23,14 @@ export class Example extends XMLAccentBlock
     task: string;
     solution: string;
 
-    dodem: number[];
+    dodem: string[];
 
-    parseDodemAttr(): number[]
+    parseDodemAttr(): string[]
     {
-        let tasks: number[] = [];
+        let tasks: string[] = [];
 
         if (this.parsedXml?.$?.dodem)
-            tasks = this.parsedXml.$.dodem.split(',').map((item: string) => +item);
+            tasks = this.parsedXml.$.dodem.split(',').map((item: string) => item);
 
         return tasks;
     }
@@ -51,9 +51,15 @@ export class Example extends XMLAccentBlock
 
         if (this.dodem.length !== 0)
         {
-            abv.mainContentBlock.header += this.dodem.map((item: number) =>
+            abv.mainContentBlock.header += this.dodem.map((item: string) =>
             {
-                return `<a href="https://dodem.ru/tasks/${item}" target="_blank" class="dodem-ref">${item}</a>`;
+                let taskNum = item.split('.')[0];
+                let label = item;
+
+                if (taskNum !== label)
+                    label = `${taskNum} (${item.split('.')[1]})`;
+
+                return `<a href="https://dodem.ru/tasks/${taskNum}" target="_blank" class="dodem-ref">${label}</a>`;
             }).join('');
         }
 

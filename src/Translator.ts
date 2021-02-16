@@ -7,6 +7,8 @@ import { PugWrapper } from "./site/PugWrapper";
 import { Dodem } from "./accent-block/Dodem";
 import { Important } from "./accent-block/Important";
 import { Util } from "./util/Util";
+import { CrossTheme } from "./accent-block/CrossTheme";
+import { ToDo } from "./accent-block/ToDo";
 
 const mdIt = require('markdown-it')({
     html: true,
@@ -164,6 +166,18 @@ export class Translator
         content = content.replace(this.tagSingleRegexp('dodem'), match =>
         {
             return AccentBlock.compile((new Dodem).parse(match).toAccentBlock());
+        });
+
+        // Crosses
+        content = content.replace(this.tagSingleRegexp('cross'), match =>
+        {
+            return AccentBlock.compile((new CrossTheme).parse(match).toAccentBlock());
+        });
+
+        // ToDos
+        content = content.replace(this.tagRegexp('todo'), match =>
+        {
+            return AccentBlock.compile((new ToDo).parse(match).toAccentBlock());
         });
 
         // Importants

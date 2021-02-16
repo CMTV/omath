@@ -34,7 +34,7 @@ export class Dodem extends XMLAccentBlock
             title: 'Демидович'
         };
 
-        abv.mainContentBlock.content = `Теперь у вас есть вся необходимая информация для решения задач из раздела <a target="_blank" href="https://dodem.ru/toc/${this.tocId}">${this.title}</a>.\nЗакрепите пройденную теорию практикой!`;
+        abv.mainContentBlock.content = `Теперь у вас есть вся необходимая информация для решения задач из раздела «<a target="_blank" href="https://dodem.ru/toc/${this.tocId}">${this.title}</a>».\nЗакрепите пройденную теорию практикой!`;
 
         return abv;
     }
