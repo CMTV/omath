@@ -18,6 +18,8 @@ export function buildDraft()
 
 export function buildAll(devFlags = false)
 {
+    parseArgv();
+
     if (devFlags)
     {
         CONFIG.setFlags(
@@ -37,6 +39,15 @@ export function buildAll(devFlags = false)
         path.join('out', 'CNAME'),
         'omath.ru'
     );
+}
+
+function parseArgv()
+{
+    process.argv.forEach(arg =>
+    {
+        if (arg.startsWith('--target='))
+            CONFIG.target = arg.replace('--target=', '');
+    }); 
 }
 
 function clear()

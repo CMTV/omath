@@ -28,6 +28,7 @@ export enum BuildFlag
 class Config
 {
     bFlags: BuildFlag[] = [];
+    target: string = null;
 
     static EXCLUDE_FIELDS = ['url', 'devUrl'];
 
