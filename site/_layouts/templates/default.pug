@@ -37,6 +37,10 @@ html(lang="ru")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1.0")
     
+        //- Color scheme tags
+        meta(name="color-scheme", content="")
+        meta(name="theme-color", content="")
+
         //- SEO
 
         if (typeof SEO.title === 'string')
@@ -78,14 +82,30 @@ html(lang="ru")
     body
         //- Initial theme switch
         script.
-            (function()
+            (() =>
             {
-                var theme = localStorage.getItem('theme');
                 var preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+                var preferTheme = (preferDark ? 'dark' : 'light');
 
-                if ( (theme === null && preferDark) || (theme === 'dark') )
-                    document.body.classList.add('theme--dark');
+                var theme = localStorage.getItem('theme');
+
+                if (theme === 'null')
+                    theme = preferTheme;
+                
+                setTheme(theme);
             })();
+
+            function setTheme(theme)
+            {
+                document.body.classList.toggle('theme--dark', (theme === 'dark'));
+
+                var themeColors = { light: '#ffffff', dark: '#333333' };
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', themeColors[theme]);
+
+                document.querySelector('meta[name="color-scheme"]').setAttribute('content', theme);
+
+                localStorage.setItem('theme', theme);
+            }
 
         .nav-open-button(title="Отрыть меню", data-nav-switcher)
             i.fas.fa-bars

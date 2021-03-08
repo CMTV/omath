@@ -45,22 +45,3 @@ main
     @include max-bp('noFullNav')    { padding: 0 $l_gapBig; }
     @include max-bp('mini')         { padding: 0 $l_gap; }
 }
-
-body.theme--dark
-{
-    &::-webkit-scrollbar
-    {
-        width: 15px;
-    }
-
-    &::-webkit-scrollbar-thumb
-    {
-        background: #333333;
-        border: 1px solid #4D4D4D;
-    }
-
-    &::-webkit-scrollbar-track
-    {
-        background: var(--color-bg-accent);
-    }
-}
